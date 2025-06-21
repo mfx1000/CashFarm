@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
  * Fetches and returns the current state of the game from the in-memory store.
  * @param {NextRequest} request - The incoming request object.
  */
-export async function GET(request: NextRequest) { // FIXED: Added the 'request: NextRequest' parameter
+export async function GET(request: NextRequest) {
   try {
     const game = getGame();
     return NextResponse.json(game);
@@ -18,3 +18,8 @@ export async function GET(request: NextRequest) { // FIXED: Added the 'request: 
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
+
+// FIXED: Add an empty export at the end of the file.
+// This explicitly tells the Next.js compiler that this file is a module,
+// which can resolve stubborn build errors.
+export {};
