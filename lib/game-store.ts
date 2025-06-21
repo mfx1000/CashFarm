@@ -112,26 +112,28 @@ export const advanceGame = async () => {
         case 'picking':
             currentGame.countdown--;
             if (currentGame.countdown <= 0) {
-                currentGame.phase = 'flipping';
+                // FIXED: Create a stable reference to currentGame to use within this block.
+                const game = currentGame;
+                game.phase = 'flipping';
                 const flipResult = Math.random() < 0.5 ? 'heads' : 'tails';
-                currentGame.lastFlipResult = flipResult;
+                game.lastFlipResult = flipResult;
                 
                 const eliminated = new Set<string>();
-                currentGame.activePlayerIds.forEach(id => {
-                    const player = currentGame.players.get(id);
+                game.activePlayerIds.forEach(id => {
+                    const player = game.players.get(id);
                     if (player?.pick !== flipResult) {
                         eliminated.add(id);
                     }
                 });
                 
-                eliminated.forEach(id => currentGame!.activePlayerIds.delete(id));
-                currentGame.eliminatedCount = eliminated.size;
+                eliminated.forEach(id => game.activePlayerIds.delete(id));
+                game.eliminatedCount = eliminated.size;
 
-                pusherServer.trigger(currentGame.id, 'round-flipping', {
+                pusherServer.trigger(game.id, 'round-flipping', {
                     result: flipResult,
                     countdown: ROUND_FLIP_TIME,
                 });
-                currentGame.countdown = ROUND_FLIP_TIME;
+                game.countdown = ROUND_FLIP_TIME;
             }
             break;
             
@@ -147,8 +149,6 @@ export const advanceGame = async () => {
                         await issuePayouts(currentGame.id, winner.whopId, currentGame.prizePool);
                     }
 
-                    // FIXED: Add a null check before accessing currentGame again after an await call.
-                    // This satisfies the TypeScript compiler's null safety checks.
                     if (!currentGame) return;
 
                     pusherServer.trigger(currentGame.id, 'game-over', { winner });

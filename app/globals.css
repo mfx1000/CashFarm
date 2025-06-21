@@ -12,3 +12,65 @@ body {
 	color: var(--foreground);
 	font-family: Arial, Helvetica, sans-serif;
 }
+
+/* The container that holds the coin, enabling the 3D perspective. */
+.coin-container {
+  width: 200px;
+  height: 200px;
+  perspective: 1000px; /* This creates the 3D effect */
+  margin: 0 auto;
+}
+
+/* The coin element itself. It's set to preserve the 3D transformations of its children.
+  The transition property ensures the rotation is smooth.
+*/
+.coin {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 1.2s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+
+/* This class is added by JavaScript to start the flip. 
+  We rotate it by 1800 degrees (5 full spins) to make it look good.
+*/
+.coin.is-flipping {
+  transform: rotateY(1800deg);
+}
+
+/* These classes are added by JS to show the final result without animation. */
+.coin.show-heads {
+    transform: rotateY(0deg);
+    transition: none;
+}
+.coin.show-tails {
+    transform: rotateY(180deg);
+    transition: none;
+}
+
+
+/* Styling for the individual faces of the coin (Heads and Tails).
+  - position: absolute: Places them on top of each other.
+  - backface-visibility: hidden: The magic trick that hides the back of the element when it rotates away.
+*/
+.coin-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden; /* For Safari */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.coin-face img {
+  width: 100%;
+  height: 100%;
+}
+
+/* The Tails face starts pre-rotated 180 degrees, so it's facing backward initially. */
+.coin-face.tails {
+  transform: rotateY(180deg);
+}
