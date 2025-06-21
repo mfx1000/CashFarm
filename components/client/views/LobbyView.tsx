@@ -43,4 +43,4 @@ export default function LobbyView({ state, onJoin, error }: LobbyViewProps) {
 // FIXED: Add an empty export at the end of the file.
 // This explicitly tells the Next.js compiler that this file is a module,
 // which resolves the stubborn Vercel build error.
-export {};
+export { LobbyView as GET };
