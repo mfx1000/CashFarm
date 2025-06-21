@@ -5,9 +5,9 @@ import { useIframeSdk } from "@whop/react";
 import { getPusherClient } from "@/lib/pusher";
 import { useCurrentUser } from "@/hooks/useCurrentUser"; // FIXED: This will now be found
 
-import  LobbyView from "./views/LobbyView";
+import LobbyView from "./views/LobbyView";
 import PickingView from "./views/PickingView";
-import  ResultsView from "./views/ResultsView";
+import ResultsView from "./views/ResultsView";
 import { EndView } from "./views/EndView";
 
 // FIXED: Define the structure of the game state used on the client
