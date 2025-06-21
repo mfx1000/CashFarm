@@ -5,11 +5,10 @@ import { getGame } from "@/lib/game-store";
 export const dynamic = "force-dynamic";
 
 /**
- * API route handler for GET requests.
- * Fetches and returns the current state of the game from the in-memory store.
- * @param {NextRequest} request - The incoming request object.
+ * API route handler for GET requests, defined as a separate function.
+ * @param {NextRequest} req - The incoming request object.
  */
-export async function GET(request: NextRequest) {
+async function handler(req: NextRequest) {
   try {
     const game = getGame();
     return NextResponse.json(game);
@@ -19,7 +18,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// FIXED: Add an empty export at the end of the file.
-// This explicitly tells the Next.js compiler that this file is a module,
-// which can resolve stubborn build errors.
-export {};
+// FIXED: Export the handler using a different syntax.
+// This explicitly exports a named constant 'GET' which is an alias for our 'handler' function.
+// This can resolve rare module-resolution bugs in build tools.
+export { handler as GET };
