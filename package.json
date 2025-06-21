@@ -1,6 +1,6 @@
 {
 	"name": "whop-nextjs-app-template",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"private": true,
 	"scripts": {
 		"dev": "whop-proxy --command=next --commandArgs=dev",
@@ -28,6 +28,7 @@
 		"@types/react-dom": "^19",
 		"@whop-apps/dev-proxy": "0.0.1-canary.116",
 		"dotenv-cli": "^8.0.0",
+		"is-odd": "^3.0.1",
 		"tailwindcss": "^4",
 		"typescript": "^5"
 	},
